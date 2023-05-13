@@ -4,12 +4,12 @@ import {context} from '@actions/github/lib/utils'
 import {checkBody, checkTitle, checkBranch} from './checks'
 import {checkIssueLabels} from './check-issue-labels'
 
-console.log('JOSH TEST: From the console, a log.')
-core.debug('JOSH TEST: I believe I have been updated.')
-core.error('JOSH TEST: oh no an error')
-core.info('JOSH TEST: from core, info')
-core.warning('JOSH TEST: from core, a warning')
-core.notice('JOSH TEST: a notice from core')
+console.log('JOSH TEST 1: From the console, a log.')
+core.debug('JOSH TEST 1: I believe I have been updated.')
+core.error('JOSH TEST 1: oh no an error')
+core.info('JOSH TEST 1: from core, info')
+core.warning('JOSH TEST 1: from core, a warning')
+core.notice('JOSH TEST 1: a notice from core')
 
 type PullRequestReview = {
   id: number
@@ -45,6 +45,13 @@ const filesToWatch = core.getMultilineInput('watch-files')
 const watchedFilesComment = core.getInput('watch-files-comment')
 const client = github.getOctokit(repoToken)
 async function run(): Promise<void> {
+  console.log('JOSH TEST 2 (in run): From the console, a log.')
+  core.debug('JOSH TEST 2 (in run): I believe I have been updated.')
+  core.error('JOSH TEST 2 (in run): oh no an error')
+  core.info('JOSH TEST 2 (in run): from core, info')
+  core.warning('JOSH TEST 2 (in run): from core, a warning')
+  core.notice('JOSH TEST 2 (in run): a notice from core')
+
   try {
     const ctx = github.context
     const pr = ctx.issue
@@ -271,3 +278,10 @@ async function userIsTeamMember(login: string, owner: string) {
   })
 }
 run()
+
+console.log('JOSH TEST 3 (end of file): From the console, a log.')
+core.debug('JOSH TEST 3 (end of file): I believe I have been updated.')
+core.error('JOSH TEST 3 (end of file): oh no an error')
+core.info('JOSH TEST 3 (end of file): from core, info')
+core.warning('JOSH TEST 3 (end of file): from core, a warning')
+core.notice('JOSH TEST 3 (end of file): a notice from core')

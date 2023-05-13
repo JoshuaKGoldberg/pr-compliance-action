@@ -37,12 +37,12 @@ const github = __importStar(require("@actions/github"));
 const utils_1 = require("@actions/github/lib/utils");
 const checks_1 = require("./checks");
 const check_issue_labels_1 = require("./check-issue-labels");
-console.log('JOSH TEST: From the console, a log.');
-core.debug('JOSH TEST: I believe I have been updated.');
-core.error('JOSH TEST: oh no an error');
-core.info('JOSH TEST: from core, info');
-core.warning('JOSH TEST: from core, a warning');
-core.notice('JOSH TEST: a notice from core');
+console.log('JOSH TEST 1: From the console, a log.');
+core.debug('JOSH TEST 1: I believe I have been updated.');
+core.error('JOSH TEST 1: oh no an error');
+core.info('JOSH TEST 1: from core, info');
+core.warning('JOSH TEST 1: from core, a warning');
+core.notice('JOSH TEST 1: a notice from core');
 const repoToken = core.getInput('repo-token');
 const ignoreAuthors = core.getMultilineInput('ignore-authors');
 const ignoreTeamMembers = core.getBooleanInput('ignore-team-members');
@@ -65,6 +65,12 @@ const client = github.getOctokit(repoToken);
 function run() {
     var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q, _r;
     return __awaiter(this, void 0, void 0, function* () {
+        console.log('JOSH TEST 2 (in run): From the console, a log.');
+        core.debug('JOSH TEST 2 (in run): I believe I have been updated.');
+        core.error('JOSH TEST 2 (in run): oh no an error');
+        core.info('JOSH TEST 2 (in run): from core, info');
+        core.warning('JOSH TEST 2 (in run): from core, a warning');
+        core.notice('JOSH TEST 2 (in run): a notice from core');
         try {
             const ctx = github.context;
             const pr = ctx.issue;
@@ -251,3 +257,9 @@ function userIsTeamMember(login, owner) {
     });
 }
 run();
+console.log('JOSH TEST 3 (end of file): From the console, a log.');
+core.debug('JOSH TEST 3 (end of file): I believe I have been updated.');
+core.error('JOSH TEST 3 (end of file): oh no an error');
+core.info('JOSH TEST 3 (end of file): from core, info');
+core.warning('JOSH TEST 3 (end of file): from core, a warning');
+core.notice('JOSH TEST 3 (end of file): a notice from core');
