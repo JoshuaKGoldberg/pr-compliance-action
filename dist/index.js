@@ -42,7 +42,7 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.checkIssueLabels = void 0;
 const core = __importStar(__nccwpck_require__(2186));
 const check_linked_issue_labels_1 = __nccwpck_require__(5877);
-function checkIssueLabels(client, pull, requiredLabels) {
+function checkIssueLabels(client, locator, requiredLabels) {
     return __awaiter(this, void 0, void 0, function* () {
         if (!requiredLabels.length) {
             return [];
@@ -50,26 +50,27 @@ function checkIssueLabels(client, pull, requiredLabels) {
         try {
             // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
             const result = (yield client.graphql(`
-    query ($pull: Int!) {
-    repository(name: "template-typescript-node-package", owner: "JoshuaKGoldberg") {
-      pullRequest(number: $pull) {
-        closingIssuesReferences(first: 100) {
-          edges {
-            node {
-              labels(first: 100) {
+        query ($owner: String!, $pull: Int!, $repo: String!) {
+          repository(name: $repo, owner: $owner) {
+            pullRequest(number: $pull) {
+              closingIssuesReferences(first: 100) {
                 edges {
                   node {
-                    name
+                    labels(first: 100) {
+                      edges {
+                        node {
+                          name
+                        }
+                      }
+                    }
+                    number
                   }
                 }
               }
             }
           }
-          number
         }
-      }
-    }
-  }`, { pull }));
+      `, { owner: locator.owner, pull: locator.pull, repo: locator.repo }));
             core.debug(`Received from GraphQL: ${JSON.stringify(result)}`);
             return (0, check_linked_issue_labels_1.checkLinkedIssueLabels)(result, requiredLabels);
         }
@@ -249,6 +250,12 @@ const github = __importStar(__nccwpck_require__(5438));
 const utils_1 = __nccwpck_require__(3030);
 const checks_1 = __nccwpck_require__(2321);
 const check_issue_labels_1 = __nccwpck_require__(6810);
+console.log('JOSH TEST 1: From the console, a log.');
+core.debug('JOSH TEST 1: I believe I have been updated.');
+core.error('JOSH TEST 1: oh no an error');
+core.info('JOSH TEST 1: from core, info');
+core.warning('JOSH TEST 1: from core, a warning');
+core.notice('JOSH TEST 1: a notice from core');
 const repoToken = core.getInput('repo-token');
 const ignoreAuthors = core.getMultilineInput('ignore-authors');
 const ignoreTeamMembers = core.getBooleanInput('ignore-team-members');
@@ -271,6 +278,12 @@ const client = github.getOctokit(repoToken);
 function run() {
     var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q, _r;
     return __awaiter(this, void 0, void 0, function* () {
+        console.log('JOSH TEST 2 (in run): From the console, a log.');
+        core.debug('JOSH TEST 2 (in run): I believe I have been updated.');
+        core.error('JOSH TEST 2 (in run): oh no an error');
+        core.info('JOSH TEST 2 (in run): from core, info');
+        core.warning('JOSH TEST 2 (in run): from core, a warning');
+        core.notice('JOSH TEST 2 (in run): a notice from core');
         try {
             const ctx = github.context;
             const pr = ctx.issue;
@@ -304,7 +317,11 @@ function run() {
             // bodyCheck passes if the author is to be ignored or if the check function passes
             const bodyCheck = (0, checks_1.checkBody)(body, bodyRegexInput);
             core.debug(`Checking issue labels: ${issueLabels.join(',')}`);
-            const issueLabelErrors = yield (0, check_issue_labels_1.checkIssueLabels)(client, pr.number, issueLabels);
+            const issueLabelErrors = yield (0, check_issue_labels_1.checkIssueLabels)(client, {
+                owner: pr.owner,
+                pull: pr.number,
+                repo: pr.repo
+            }, issueLabels);
             core.debug(`Received issue label errors: ${issueLabelErrors.join(',')}`);
             const { valid: titleCheck, errors: titleErrors } = !titleCheckEnable
                 ? { valid: true, errors: [] }
@@ -457,6 +474,12 @@ function userIsTeamMember(login, owner) {
     });
 }
 run();
+console.log('JOSH TEST 3 (end of file): From the console, a log.');
+core.debug('JOSH TEST 3 (end of file): I believe I have been updated.');
+core.error('JOSH TEST 3 (end of file): oh no an error');
+core.info('JOSH TEST 3 (end of file): from core, info');
+core.warning('JOSH TEST 3 (end of file): from core, a warning');
+core.notice('JOSH TEST 3 (end of file): a notice from core');
 
 
 /***/ }),

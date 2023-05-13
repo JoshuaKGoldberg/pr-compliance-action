@@ -104,7 +104,11 @@ function run() {
             // bodyCheck passes if the author is to be ignored or if the check function passes
             const bodyCheck = (0, checks_1.checkBody)(body, bodyRegexInput);
             core.debug(`Checking issue labels: ${issueLabels.join(',')}`);
-            const issueLabelErrors = yield (0, check_issue_labels_1.checkIssueLabels)(client, pr.number, issueLabels);
+            const issueLabelErrors = yield (0, check_issue_labels_1.checkIssueLabels)(client, {
+                owner: pr.owner,
+                pull: pr.number,
+                repo: pr.repo
+            }, issueLabels);
             core.debug(`Received issue label errors: ${issueLabelErrors.join(',')}`);
             const { valid: titleCheck, errors: titleErrors } = !titleCheckEnable
                 ? { valid: true, errors: [] }

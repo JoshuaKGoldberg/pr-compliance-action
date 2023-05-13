@@ -100,7 +100,11 @@ async function run(): Promise<void> {
     core.debug(`Checking issue labels: ${issueLabels.join(',')}`)
     const issueLabelErrors = await checkIssueLabels(
       client,
-      pr.number,
+      {
+        owner: pr.owner,
+        pull: pr.number,
+        repo: pr.repo
+      },
       issueLabels
     )
     core.debug(`Received issue label errors: ${issueLabelErrors.join(',')}`)
