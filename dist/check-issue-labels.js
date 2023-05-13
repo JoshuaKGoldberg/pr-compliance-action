@@ -56,8 +56,8 @@ function checkIssueLabels(client, pull, requiredLabels) {
                   }
                 }
               }
+              number
             }
-            number
           }
         }
       }
