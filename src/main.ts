@@ -4,7 +4,12 @@ import {context} from '@actions/github/lib/utils'
 import {checkBody, checkTitle, checkBranch} from './checks'
 import {checkIssueLabels} from './check-issue-labels'
 
+console.log('From the console, a log.')
 core.debug('I believe I have been updated.')
+core.error('oh no an error')
+core.info('from core, info')
+core.warning('from core, a warning')
+core.notice('a notice from core')
 
 type PullRequestReview = {
   id: number
