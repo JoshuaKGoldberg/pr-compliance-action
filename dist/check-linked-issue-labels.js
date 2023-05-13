@@ -1,10 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.checkLinkedIssueLabels = void 0;
-function checkLinkedIssueLabels(result, requiredLabels) {
+function checkLinkedIssueLabels(edges, requiredLabels) {
     const errors = [];
-    for (const issueEdge of result.data.repository.pullRequest
-        .closingIssuesReferences.edges) {
+    for (const issueEdge of edges) {
         const issueLabels = new Set(issueEdge.node.labels.edges.map(labelEdge => labelEdge.node.name));
         const issueMissingLabels = requiredLabels.filter(requiredLabel => !issueLabels.has(requiredLabel));
         if (issueMissingLabels.length) {

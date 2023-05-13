@@ -65,7 +65,7 @@ function checkIssueLabels(client, locator, requiredLabels) {
         }
       `, { owner: locator.owner, pull: locator.pull, repo: locator.repo }));
             core.debug(`Received from GraphQL: ${JSON.stringify(result)}`);
-            return (0, check_linked_issue_labels_1.checkLinkedIssueLabels)(result, requiredLabels);
+            return (0, check_linked_issue_labels_1.checkLinkedIssueLabels)(result.repository.pullRequest.closingIssuesReferences.edges, requiredLabels);
         }
         catch (error) {
             // eslint-disable-next-line @typescript-eslint/restrict-template-expressions

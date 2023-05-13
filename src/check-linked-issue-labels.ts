@@ -1,13 +1,12 @@
-import {QueryResult} from './check-issue-labels'
+import type {ClosingIssueReferenceEdge} from './check-issue-labels'
 
 export function checkLinkedIssueLabels(
-  result: QueryResult,
+  edges: ClosingIssueReferenceEdge[],
   requiredLabels: string[]
 ) {
   const errors: string[] = []
 
-  for (const issueEdge of result.data.repository.pullRequest
-    .closingIssuesReferences.edges) {
+  for (const issueEdge of edges) {
     const issueLabels = new Set(
       issueEdge.node.labels.edges.map(labelEdge => labelEdge.node.name)
     )

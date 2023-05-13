@@ -72,7 +72,7 @@ function checkIssueLabels(client, locator, requiredLabels) {
         }
       `, { owner: locator.owner, pull: locator.pull, repo: locator.repo }));
             core.debug(`Received from GraphQL: ${JSON.stringify(result)}`);
-            return (0, check_linked_issue_labels_1.checkLinkedIssueLabels)(result, requiredLabels);
+            return (0, check_linked_issue_labels_1.checkLinkedIssueLabels)(result.repository.pullRequest.closingIssuesReferences.edges, requiredLabels);
         }
         catch (error) {
             // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
@@ -93,10 +93,9 @@ exports.checkIssueLabels = checkIssueLabels;
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.checkLinkedIssueLabels = void 0;
-function checkLinkedIssueLabels(result, requiredLabels) {
+function checkLinkedIssueLabels(edges, requiredLabels) {
     const errors = [];
-    for (const issueEdge of result.data.repository.pullRequest
-        .closingIssuesReferences.edges) {
+    for (const issueEdge of edges) {
         const issueLabels = new Set(issueEdge.node.labels.edges.map(labelEdge => labelEdge.node.name));
         const issueMissingLabels = requiredLabels.filter(requiredLabel => !issueLabels.has(requiredLabel));
         if (issueMissingLabels.length) {
