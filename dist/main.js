@@ -37,6 +37,7 @@ const github = __importStar(require("@actions/github"));
 const utils_1 = require("@actions/github/lib/utils");
 const checks_1 = require("./checks");
 const check_issue_labels_1 = require("./check-issue-labels");
+core.debug('I believe I have been updated.');
 const repoToken = core.getInput('repo-token');
 const ignoreAuthors = core.getMultilineInput('ignore-authors');
 const ignoreTeamMembers = core.getBooleanInput('ignore-team-members');

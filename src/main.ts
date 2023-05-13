@@ -4,6 +4,8 @@ import {context} from '@actions/github/lib/utils'
 import {checkBody, checkTitle, checkBranch} from './checks'
 import {checkIssueLabels} from './check-issue-labels'
 
+core.debug('I believe I have been updated.')
+
 type PullRequestReview = {
   id: number
   node_id: string
