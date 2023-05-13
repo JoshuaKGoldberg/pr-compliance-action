@@ -23,9 +23,13 @@ export function checkLinkedIssueLabels(
 
 function formatError(issue: number, labels: string[]) {
   return [
-    'Missing required label',
+    '- Missing required label',
     labels.length > 1 ? 's' : '',
-    ` on issue ${issue}: `,
-    labels.join(', ')
+    ` on issue #${issue}: `,
+    labels.map(wrapWithTick).join(', ')
   ].join('')
+}
+
+function wrapWithTick(text: string) {
+  return `\`${text}\``
 }

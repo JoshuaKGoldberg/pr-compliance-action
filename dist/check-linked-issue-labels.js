@@ -15,9 +15,12 @@ function checkLinkedIssueLabels(edges, requiredLabels) {
 exports.checkLinkedIssueLabels = checkLinkedIssueLabels;
 function formatError(issue, labels) {
     return [
-        'Missing required label',
+        '- Missing required label',
         labels.length > 1 ? 's' : '',
-        ` on issue ${issue}: `,
-        labels.join(', ')
+        ` on issue #${issue}: `,
+        labels.map(wrapWithTick).join(', ')
     ].join('');
+}
+function wrapWithTick(text) {
+    return `\`${text}\``;
 }
