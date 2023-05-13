@@ -52,8 +52,8 @@ export async function checkIssueLabels(
                 }
               }
             }
+            number
           }
-          number
         }
       }
     }
