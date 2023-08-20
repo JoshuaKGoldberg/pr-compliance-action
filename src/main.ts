@@ -28,6 +28,7 @@ const issueLabels = core.getMultilineInput('issue-labels')
 const issueLabelsAutoClose = core.getBooleanInput('issue-labels-auto-close')
 const issueLabelsComment = core.getInput('issue-labels-comment')
 core.debug(`issueLabels: ${JSON.stringify(issueLabels, null, 4)}`)
+core.warning(`issueLabels: ${JSON.stringify(issueLabels, null, 4)}`)
 let protectedBranch = core.getInput('protected-branch')
 const protectedBranchAutoClose = core.getBooleanInput(
   'protected-branch-auto-close'
@@ -94,6 +95,9 @@ async function run(): Promise<void> {
       issueLabels
     )
     core.debug(`issueLabelErrors: ${JSON.stringify(issueLabelErrors, null, 4)}`)
+    core.warning(
+      `issueLabelErrors: ${JSON.stringify(issueLabelErrors, null, 4)}`
+    )
     const {valid: titleCheck, errors: titleErrors} = !titleCheckEnable
       ? {valid: true, errors: []}
       : await checkTitle(title)
@@ -108,11 +112,13 @@ async function run(): Promise<void> {
       branchCheck &&
       filesFlagged.length === 0
     core.debug(`prCompliant: ${JSON.stringify(prCompliant, null, 4)}`)
+    core.warning(`prCompliant: ${JSON.stringify(prCompliant, null, 4)}`)
     const shouldClosePr =
       (bodyCheck === false && bodyAutoClose === true) ||
       (branchCheck === false && protectedBranchAutoClose === true) ||
       (!!issueLabelErrors.length && issueLabelsAutoClose === true)
     core.debug(`shouldClosePr: ${JSON.stringify(shouldClosePr, null, 4)}`)
+    core.warning(`shouldClosePr: ${JSON.stringify(shouldClosePr, null, 4)}`)
     // Set Output values
     core.setOutput('body-check', bodyCheck)
     core.setOutput('branch-check', branchCheck)
